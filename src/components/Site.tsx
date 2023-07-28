@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './Site.module.css'
 import { PageOne } from './pages/PageOne';
 import { PageThree } from './pages/PageThree';
@@ -11,15 +11,42 @@ import { Page } from './pages/Page';
 import styled from 'styled-components';
 
 export const Site = () => {
+
+    //const [burger, setBurger] = useState(false)
+
+    function useWindowSize() {
+        const [widowSize, setWindowSize] = useState(0);
+        useEffect(() => {
+
+            function handleResize() {
+                setWindowSize(window.innerWidth);
+            }
+
+            window.addEventListener('resize', handleResize);
+            handleResize();
+
+            return () => window.removeEventListener('resize', handleResize);
+
+        }, []);
+        return widowSize;
+    }
+
+    const size = useWindowSize()
+
     return (
         <div>
             <div className={styles.header}><h1>HEADER</h1></div>
             <div className={styles.body}>
-                <div className={styles.nav}>
-                    <NavWrapper><NavLink to={'/Page/0'}>Page 1</NavLink></NavWrapper>
-                    <NavWrapper><NavLink to={'/Page/1'}>Page 2</NavLink></NavWrapper>
-                    <NavWrapper><NavLink to={'/Page/2'}>Page 3</NavLink></NavWrapper>
-                </div>
+                {size > 1000
+                    ? <div className={styles.nav}>
+                        <NavWrapper><NavLink to={'/Page/0'}>Page 1</NavLink></NavWrapper>
+                        <NavWrapper><NavLink to={'/Page/1'}>Page 2</NavLink></NavWrapper>
+                        <NavWrapper><NavLink to={'/Page/2'}>Page 3</NavLink></NavWrapper>
+                    </div>
+                    : <span></span>
+
+                }
+
                 <div className={styles.content}>
                     <Routes>
                         <Route path={'/'} element={<Navigate to={'/PageOne'} />} />

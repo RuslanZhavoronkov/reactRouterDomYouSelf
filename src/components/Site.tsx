@@ -8,6 +8,7 @@ import { Error404 } from './pages/Error404';
 import { NavLink } from 'react-router-dom';
 import { dataState } from '../dataState/dataState';
 import { Page } from './pages/Page';
+import styled from 'styled-components';
 
 export const Site = () => {
     return (
@@ -15,21 +16,21 @@ export const Site = () => {
             <div className={styles.header}><h1>HEADER</h1></div>
             <div className={styles.body}>
                 <div className={styles.nav}>
-                    <div><NavLink to={'/Page/0'} className={({isActive})=>isActive ? styles.active : styles.navLink}>Page 1</NavLink></div>
-                    <div><NavLink to={'/Page/1'} className={({isActive})=>isActive ? styles.active : styles.navLink}>Page 2</NavLink></div>
-                    <div><NavLink to={'/Page/2'} className={({isActive})=>isActive ? styles.active : styles.navLink}>Page 3</NavLink></div>
+                    <NavWrapper><NavLink to={'/Page/0'}>Page 1</NavLink></NavWrapper>
+                    <NavWrapper><NavLink to={'/Page/1'}>Page 2</NavLink></NavWrapper>
+                    <NavWrapper><NavLink to={'/Page/2'}>Page 3</NavLink></NavWrapper>
                 </div>
                 <div className={styles.content}>
                     <Routes>
-                        <Route path={'/'} element={<Navigate to={'/PageOne'}/>}/> 
+                        <Route path={'/'} element={<Navigate to={'/PageOne'} />} />
 
-                        <Route path={'/Page/:id'} element={<Page pages={dataState.pages}/>} />
+                        <Route path={'/Page/:id'} element={<Page pages={dataState.pages} />} />
 
                         {/* <Route path={'/PageOne'} element={<PageOne />}/>
                         <Route path={'/PageTwo'} element={<PageTwo />}/>
                         <Route path={'/PageThree'} element={<PageThree />}/> */}
 
-                        <Route  path = {'/Page/*'} element={<Error404/>}/>
+                        <Route path={'/Page/*'} element={<Error404 />} />
                     </Routes>
                 </div>
             </div>
@@ -37,3 +38,28 @@ export const Site = () => {
     );
 };
 
+const NavWrapper = styled.div`
+margin - left: 10px;
+font - size: 20px;
+
+& > a {
+    text - decoration: none;
+    color: #1e3786;
+}
+
+& > a.active {
+    text - decoration: none;
+    color: #03eaff;
+}
+
+& > a:hover {
+    color: steelblue; /*Color link */
+}
+`;
+
+
+//-----------------------------------------------------------------------------------------------------------------------------------------
+
+                    // <div><NavLink to={'/Page/0'} className={({ isActive }) => isActive ? styles.active : styles.navLink}>Page 1</NavLink></div>
+                    // <div><NavLink to={'/Page/1'} className={({ isActive }) => isActive ? styles.active : styles.navLink}>Page 2</NavLink></div>
+                    // <div><NavLink to={'/Page/2'} className={({ isActive }) => isActive ? styles.active : styles.navLink}>Page 3</NavLink></div>
